@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>131a5c6 | Home</title>
     <style>
-        /* ここに元のCSSコードをすべて貼り付けます */
+        /* ベーススタイル */
         body { font-family: sans-serif; margin: 0; padding: 0; background: #f0f4f8; text-align: center; }
 
         /* ナビゲーション */
@@ -32,9 +32,10 @@
             color: #1abc9c;
         }
 
-        /* 本文 */
-        h1 { color: #2c3e50; margin-top: 2em; }
+        /* コンテンツカード */
         .card { max-width: 500px; margin: 2em auto; padding: 2em; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        /* ボタン */
         .button {
             display: inline-block;
             margin-top: 1.5em;
@@ -69,10 +70,45 @@
             margin: 0.4em 0;
         }
 
+        /* リンク集 */
+        #links {
+            max-width: 600px;
+            margin: 2em auto;
+            padding: 1em;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #links h2 {
+            color: #2c3e50;
+            margin-bottom: 1em;
+        }
+        .link-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .link-button {
+            display: inline-block;
+            padding: 1em 1.5em;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        .link-button:hover {
+            background: #217dbb;
+        }
+
         /* フッター */
         footer { margin-top: 3em; padding: 1em; font-size: 0.8em; color: #777; line-height: 1.6; }
 
-        /* パスワード認証用のCSS */
+        /* パスワード認証用のスタイル */
         #content { display: none; }
         #password-form { max-width: 400px; margin: 10em auto; padding: 2em; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         #password-form input { padding: 0.5em; font-size: 1em; }
@@ -96,7 +132,8 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="UAM/index.html">UAM</a></li>
-                <li><a href="#" onclick="logout()">Logout</a></li> </ul>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
         </nav>
 
         <div class="card">
@@ -109,11 +146,20 @@
         <section id="history">
             <h2>更新履歴 / Update History</h2>
             <ul>
-                
                 <li>2025-09-20: 今後の方向性に基づきホームページを制限付きとしました。</li>
                 <li>2025-08-29: ホームページを公開しました。</li>
                 <li>2025-08-28: UAM シミュレーションページを作成しました。</li>
             </ul>
+        </section>
+
+        <section id="links">
+            <h2>リンク集</h2>
+            <div class="link-list">
+                <a href="https://github.com/131a5c6" target="_blank" class="link-button">GitHub</a>
+                <a href="https://twitter.com/131a5c6" target="_blank" class="link-button">Twitter</a>
+                <a href="https://bsky.app/profile/131a5c6.bsky.social" target="_blank" class="link-button">Bluesky</a>
+                <a href="https://www.instagram.com/131a5c6/" target="_blank" class="link-button">Instagram</a>
+            </div>
         </section>
 
         <footer>
@@ -123,7 +169,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script>
-        const correctHash = "689ac11c9adb51ae98388c5fcb515194e9f04c0eb712d97df931036d249dc925";
+        const correctHash = "689ac11c9adb51ae98388c5fcb515194e9f04c0eb712d97df931036d249dc925"; 
         const passwordKey = "password_authenticated";
         const expirationTime = 24 * 60 * 60 * 1000;
 
@@ -163,15 +209,10 @@
             }
         }
 
-        // ログアウト機能を追加
         function logout() {
-            // LocalStorageから認証情報を削除
             localStorage.removeItem(passwordKey);
-            
-            // ページをリロードして、パスワード入力画面に戻す
-            location.reload(); 
+            location.reload();
         }
     </script>
 </body>
 </html>
-
