@@ -121,18 +121,17 @@
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script>
-        // ここにあなたのパスワードを設定してください
-        const correctPassword = "your_password_here";
+        // ここにあなたのパスワードをハッシュ化した文字列を設定してください
+        const correctHash = "689ac11c9adb51ae98388c5fcb515194e9f04c0eb712d97df931036d249dc925";
         const passwordKey = "password_authenticated";
         const expirationTime = 24 * 60 * 60 * 1000; // 24時間をミリ秒で指定
 
-        // ページが読み込まれたときに実行される関数
         window.onload = function() {
             const storedTime = localStorage.getItem(passwordKey);
             const currentTime = new Date().getTime();
 
-            // 保存された時間があり、かつ有効期限内であればコンテンツを表示
             if (storedTime && (currentTime - storedTime < expirationTime)) {
                 showContent();
             } else {
@@ -152,16 +151,15 @@
 
         function checkPassword() {
             const enteredPassword = document.getElementById("passwordInput").value;
+            const enteredHash = sha256(enteredPassword); // 入力されたパスワードをハッシュ化
             const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
 
-            if (enteredPassword === correctPassword) {
-                // チェックボックスがオンの場合のみ、LocalStorageに保存
+            if (enteredHash === correctHash) {
                 if (keepLoggedIn) {
                     localStorage.setItem(passwordKey, new Date().getTime());
                 }
                 showContent();
             } else {
-                // パスワードが間違っている場合
                 alert("パスワードが違います。");
             }
         }
