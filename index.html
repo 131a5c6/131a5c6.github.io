@@ -96,9 +96,7 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="UAM/index.html">UAM</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+                <li><a href="#" onclick="logout()">Logout</a></li> </ul>
         </nav>
 
         <div class="card">
@@ -123,10 +121,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script>
-        // ここにあなたのパスワードをハッシュ化した文字列を設定してください
         const correctHash = "689ac11c9adb51ae98388c5fcb515194e9f04c0eb712d97df931036d249dc925";
         const passwordKey = "password_authenticated";
-        const expirationTime = 24 * 60 * 60 * 1000; // 24時間をミリ秒で指定
+        const expirationTime = 24 * 60 * 60 * 1000;
 
         window.onload = function() {
             const storedTime = localStorage.getItem(passwordKey);
@@ -151,7 +148,7 @@
 
         function checkPassword() {
             const enteredPassword = document.getElementById("passwordInput").value;
-            const enteredHash = sha256(enteredPassword); // 入力されたパスワードをハッシュ化
+            const enteredHash = sha256(enteredPassword);
             const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
 
             if (enteredHash === correctHash) {
@@ -162,6 +159,15 @@
             } else {
                 alert("パスワードが違います。");
             }
+        }
+
+        // ログアウト機能を追加
+        function logout() {
+            // LocalStorageから認証情報を削除
+            localStorage.removeItem(passwordKey);
+            
+            // ページをリロードして、パスワード入力画面に戻す
+            location.reload(); 
         }
     </script>
 </body>
