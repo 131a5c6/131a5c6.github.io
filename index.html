@@ -5,12 +5,15 @@
     <title>131a5c6 | Home</title>
     <style>
         /* ベーススタイル */
-        body { font-family: sans-serif; margin: 0; padding: 0; background: #f0f4f8; text-align: center; }
+        body { font-family: sans-serif; margin: 0; padding: 0; background: #f0f4f8; text-align: center; scroll-behavior: smooth; }
 
         /* ナビゲーション */
         nav {
             background: #2c3e50;
             padding: 0.5em 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .menu {
             list-style: none;
@@ -60,31 +63,22 @@
         .button.secondary { background: #2c3e50; }
         .button.secondary:hover { background: #1a252f; }
 
-        /* 更新履歴 */
-        #history {
+        /* 各セクション共通 */
+        .section-box {
             max-width: 600px;
             margin: 2em auto;
-            padding: 1em;
+            padding: 1.5em;
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: left;
         }
-        #history h2 { color: #2c3e50; margin-bottom: 0.5em; }
-        #history ul { padding-left: 1.2em; }
-        #history li { margin: 0.4em 0; }
+        .section-box h2 { color: #2c3e50; margin-top: 0; margin-bottom: 0.5em; text-align: center; }
+        .section-box ul { padding-left: 1.2em; }
+        .section-box li { margin: 0.4em 0; }
+        .section-box p { font-size: 0.9em; line-height: 1.6; color: #444; }
 
         /* リンク集 */
-        #links {
-            max-width: 600px;
-            margin: 2em auto;
-            padding: 1em;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        #links h2 { color: #2c3e50; margin-bottom: 1em; }
         .link-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
         .link-button {
             padding: 0.8em 1.2em;
@@ -92,21 +86,14 @@
             font-size: 0.9em;
         }
 
-        /* リンクボタンごとの個別カラー設定 */
-        .btn-github    { background: #24292e; } /* GitHub: 黒 */
-        .btn-twitter   { background: #1da1f2; } /* Twitter: 水色 */
-        .btn-bluesky   { background: #0085ff; } /* Bluesky: 青 */
-        .btn-instagram { background: #e1306c; } /* Instagram: ピンク系 */
-        .btn-threads   { background: #000000; } /* Threads: 黒 */
+        /* 個別カラー */
+        .btn-github    { background: #24292e; }
+        .btn-twitter   { background: #1da1f2; }
+        .btn-bluesky   { background: #0085ff; }
+        .btn-instagram { background: #e1306c; }
+        .btn-threads   { background: #000000; }
 
-        .btn-github:hover    { background: #444; }
-        .btn-twitter:hover   { background: #4db5f5; }
-        .btn-bluesky:hover   { background: #339dff; }
-        .btn-instagram:hover { background: #e75a8d; }
-        .btn-threads:hover   { background: #333; }
-
-        footer { margin-top: 3em; padding: 1em; font-size: 0.8em; color: #777; line-height: 1.6; }
-        #content { display: block; }
+        footer { margin-top: 3em; padding: 2em; font-size: 0.8em; color: #777; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -115,8 +102,10 @@
         <nav>
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="aboutme.html">About me</a></li>
                 <li><a href="https://github.com/131a5c6/video_Conv">Video Converter</a></li>
                 <li><a href="UAM/index.html">UAM</a></li>
+                <li><a href="disclaimer.html">免責事項</a></li>
             </ul>
         </nav>
 
@@ -125,21 +114,21 @@
             <p>ようこそ！ここは131a5c6のホームページです。</p>
             <p>制作したツールやシミュレーターを公開しています。</p>
             <a href="https://github.com/131a5c6/video_Conv" class="button">Video Converter</a>
-            <a href="UAM/index.html" class="button secondary">UAM シミュレーション</a>
+            <a href="UAM/index.html" class="button secondary">等加速度直線運動シミュレーション(UAM)</a>
         </div>
 
-        <section id="history">
+        <section id="history" class="section-box">
             <h2>更新履歴 / Update History</h2>
             <ul>
                 <li>2026-03-01: Video Converter (v0.1.0-alpha) を公開しました。</li>
                 <li>2026-03-01: 閲覧制限を解除し、ナビゲーションを整理しました。</li>
                 <li>2025-09-20: 今後の方向性に基づきホームページを制限付きとしました。</li>
                 <li>2025-08-29: ホームページを公開しました。</li>
-                <li>2025-08-28: UAM シミュレーションページを作成しました。</li>
+                <li>2025-08-28: 等加速度直線運動シミュレーションを作成しました。</li>
             </ul>
         </section>
 
-        <section id="links">
+        <section id="links" class="section-box">
             <h2>リンク集</h2>
             <div class="link-list">
                 <a href="https://github.com/131a5c6" target="_blank" class="link-button btn-github">GitHub</a>
@@ -152,7 +141,7 @@
 
         <footer>
             © 2025-2026 131a5c6. All Rights Reserved.<br>
-            本ウェブサイトおよび公開ツールはAI（Gemini）の支援を受けて制作されました。
+            Created with the support of AI (Gemini).
         </footer>
     </div>
 
