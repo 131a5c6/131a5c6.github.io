@@ -35,19 +35,30 @@
         /* コンテンツカード */
         .card { max-width: 500px; margin: 2em auto; padding: 2em; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        /* ボタン */
-        .button {
+        /* ボタン共通設定 */
+        .button, .link-button {
             display: inline-block;
-            margin-top: 1.5em;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .button:hover, .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* メインボタン */
+        .button {
+            margin: 0.5em;
             padding: 0.6em 1.2em;
             background: #3498db;
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            transition: background 0.3s;
         }
         .button:hover { background: #217dbb; }
+        .button.secondary { background: #2c3e50; }
+        .button.secondary:hover { background: #1a252f; }
 
         /* 更新履歴 */
         #history {
@@ -59,16 +70,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: left;
         }
-        #history h2 {
-            color: #2c3e50;
-            margin-bottom: 0.5em;
-        }
-        #history ul {
-            padding-left: 1.2em;
-        }
-        #history li {
-            margin: 0.4em 0;
-        }
+        #history h2 { color: #2c3e50; margin-bottom: 0.5em; }
+        #history ul { padding-left: 1.2em; }
+        #history li { margin: 0.4em 0; }
 
         /* リンク集 */
         #links {
@@ -80,35 +84,28 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
         }
-        #links h2 {
-            color: #2c3e50;
-            margin-bottom: 1em;
-        }
-        .link-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
+        #links h2 { color: #2c3e50; margin-bottom: 1em; }
+        .link-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
         .link-button {
-            display: inline-block;
-            padding: 1em 1.5em;
-            background: #3498db;
+            padding: 0.8em 1.2em;
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            transition: background 0.3s;
-            font-weight: bold;
-        }
-        .link-button:hover {
-            background: #217dbb;
+            font-size: 0.9em;
         }
 
-        /* フッター */
+        /* リンクボタンごとの個別カラー設定 */
+        .btn-github    { background: #24292e; } /* GitHub: 黒 */
+        .btn-twitter   { background: #1da1f2; } /* Twitter: 水色 */
+        .btn-bluesky   { background: #0085ff; } /* Bluesky: 青 */
+        .btn-instagram { background: #e1306c; } /* Instagram: ピンク系 */
+        .btn-threads   { background: #000000; } /* Threads: 黒 */
+
+        .btn-github:hover    { background: #444; }
+        .btn-twitter:hover   { background: #4db5f5; }
+        .btn-bluesky:hover   { background: #339dff; }
+        .btn-instagram:hover { background: #e75a8d; }
+        .btn-threads:hover   { background: #333; }
+
         footer { margin-top: 3em; padding: 1em; font-size: 0.8em; color: #777; line-height: 1.6; }
-
-        /* 表示設定 */
         #content { display: block; }
     </style>
 </head>
@@ -118,6 +115,7 @@
         <nav>
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="https://github.com/131a5c6/video_Conv">Video Converter</a></li>
                 <li><a href="UAM/index.html">UAM</a></li>
             </ul>
         </nav>
@@ -125,14 +123,16 @@
         <div class="card">
             <h1>131a5c6</h1>
             <p>ようこそ！ここは131a5c6のホームページです。</p>
-            <p>これから趣味や活動を紹介していきます。</p>
-            <a href="UAM/index.html" class="button">等加速度運動シミュレーションを見る</a>
+            <p>制作したツールやシミュレーターを公開しています。</p>
+            <a href="https://github.com/131a5c6/video_Conv" class="button">Video Converter</a>
+            <a href="UAM/index.html" class="button secondary">UAM シミュレーション</a>
         </div>
 
         <section id="history">
             <h2>更新履歴 / Update History</h2>
             <ul>
-                <li>2026-03-01: パスワードによる閲覧制限を解除しました。</li>
+                <li>2026-03-01: Video Converter (v0.1.0-alpha) を公開しました。</li>
+                <li>2026-03-01: 閲覧制限を解除し、ナビゲーションを整理しました。</li>
                 <li>2025-09-20: 今後の方向性に基づきホームページを制限付きとしました。</li>
                 <li>2025-08-29: ホームページを公開しました。</li>
                 <li>2025-08-28: UAM シミュレーションページを作成しました。</li>
@@ -142,15 +142,17 @@
         <section id="links">
             <h2>リンク集</h2>
             <div class="link-list">
-                <a href="https://github.com/131a5c6" target="_blank" class="link-button">GitHub</a>
-                <a href="https://twitter.com/131a5c6" target="_blank" class="link-button">Twitter</a>
-                <a href="https://bsky.app/profile/131a5c6.bsky.social" target="_blank" class="link-button">Bluesky</a>
-                <a href="https://www.instagram.com/131a5c6/" target="_blank" class="link-button">Instagram</a>
+                <a href="https://github.com/131a5c6" target="_blank" class="link-button btn-github">GitHub</a>
+                <a href="https://twitter.com/131a5c6" target="_blank" class="link-button btn-twitter">Twitter</a>
+                <a href="https://bsky.app/profile/131a5c6.bsky.social" target="_blank" class="link-button btn-bluesky">Bluesky</a>
+                <a href="https://www.instagram.com/131a5c6" target="_blank" class="link-button btn-instagram">Instagram</a>
+                <a href="https://www.threads.com/@131a5c6" target="_blank" class="link-button btn-threads">Threads</a>
             </div>
         </section>
 
         <footer>
-            © 2025-2026 131a5c6. All Rights Reserved. | 無断転載を禁じます。 | 本ウェブサイトはAIの支援を受けて制作されました。 (This website was created with the support of AI.)
+            © 2025-2026 131a5c6. All Rights Reserved.<br>
+            本ウェブサイトおよび公開ツールはAI（Gemini）の支援を受けて制作されました。
         </footer>
     </div>
 
