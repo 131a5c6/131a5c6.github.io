@@ -108,31 +108,17 @@
         /* フッター */
         footer { margin-top: 3em; padding: 1em; font-size: 0.8em; color: #777; line-height: 1.6; }
 
-        /* パスワード認証用のスタイル */
-        #content { display: none; }
-        #password-form { max-width: 400px; margin: 10em auto; padding: 2em; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        #password-form input { padding: 0.5em; font-size: 1em; }
-        #password-form button { margin-top: 1em; padding: 0.5em 1em; font-size: 1em; }
+        /* 表示設定 */
+        #content { display: block; }
     </style>
 </head>
 <body>
-
-    <div id="password-form">
-        <h2>パスワードを入力してください</h2>
-        <input type="password" id="passwordInput" placeholder="パスワード">
-        <p style="font-size: 0.9em; margin-top: 1em; text-align: left;">
-            <input type="checkbox" id="keepLoggedIn">
-            <label for="keepLoggedIn">24時間ログインを保持</label>
-        </p>
-        <button onclick="checkPassword()">ログイン</button>
-    </div>
 
     <div id="content">
         <nav>
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="UAM/index.html">UAM</a></li>
-                <li><a href="#" onclick="logout()">Logout</a></li>
             </ul>
         </nav>
 
@@ -146,6 +132,7 @@
         <section id="history">
             <h2>更新履歴 / Update History</h2>
             <ul>
+                <li>2026-03-01: パスワードによる閲覧制限を解除しました。</li>
                 <li>2025-09-20: 今後の方向性に基づきホームページを制限付きとしました。</li>
                 <li>2025-08-29: ホームページを公開しました。</li>
                 <li>2025-08-28: UAM シミュレーションページを作成しました。</li>
@@ -163,56 +150,9 @@
         </section>
 
         <footer>
-            © 2025 131a5c6. All Rights Reserved. | 無断転載を禁じます。 | 本ウェブサイトはAIの支援を受けて制作されました。 (This website was created with the support of AI.)
+            © 2025-2026 131a5c6. All Rights Reserved. | 無断転載を禁じます。 | 本ウェブサイトはAIの支援を受けて制作されました。 (This website was created with the support of AI.)
         </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-    <script>
-        const correctHash = "689ac11c9adb51ae98388c5fcb515194e9f04c0eb712d97df931036d249dc925"; 
-        const passwordKey = "password_authenticated";
-        const expirationTime = 24 * 60 * 60 * 1000;
-
-        window.onload = function() {
-            const storedTime = localStorage.getItem(passwordKey);
-            const currentTime = new Date().getTime();
-
-            if (storedTime && (currentTime - storedTime < expirationTime)) {
-                showContent();
-            } else {
-                showPasswordForm();
-            }
-        };
-
-        function showContent() {
-            document.getElementById("password-form").style.display = "none";
-            document.getElementById("content").style.display = "block";
-        }
-
-        function showPasswordForm() {
-            document.getElementById("password-form").style.display = "block";
-            document.getElementById("content").style.display = "none";
-        }
-
-        function checkPassword() {
-            const enteredPassword = document.getElementById("passwordInput").value;
-            const enteredHash = sha256(enteredPassword);
-            const keepLoggedIn = document.getElementById("keepLoggedIn").checked;
-
-            if (enteredHash === correctHash) {
-                if (keepLoggedIn) {
-                    localStorage.setItem(passwordKey, new Date().getTime());
-                }
-                showContent();
-            } else {
-                alert("パスワードが違います。");
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem(passwordKey);
-            location.reload();
-        }
-    </script>
 </body>
 </html>
