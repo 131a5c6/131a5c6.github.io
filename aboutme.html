@@ -2,20 +2,152 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me | 131a5c6</title>
     <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; background: #f0f4f8; text-align: center; }
-        nav { background: #2c3e50; padding: 0.5em 0; }
-        .menu { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
-        .menu li { margin: 0 1em; }
-        .menu a { color: white; text-decoration: none; font-weight: bold; }
-        .menu a:hover { color: #1abc9c; }
-        .container { max-width: 600px; margin: 5em auto; padding: 3em; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; }
-        .back-link { display: block; margin-top: 2em; color: #3498db; text-decoration: none; }
+        /* ベーススタイル（トップページと統一） */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; padding: 0; 
+            background: #f0f4f8; 
+            text-align: center; 
+            scroll-behavior: smooth; 
+            color: #333;
+        }
+
+        /* ナビゲーション（トップページと完全一致） */
+        nav {
+            background: #2c3e50;
+            padding: 0.5em 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .menu li {
+            margin: 0 1em;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .menu a:hover {
+            color: #1abc9c;
+        }
+
+        /* コンテンツ容器 */
+        .container { 
+            width: 95%; 
+            max-width: 600px; /* セクションボックスに合わせました */
+            margin: 3em auto; 
+            padding: 2.5em; 
+            background: white; 
+            border-radius: 16px; /* トップページのカードに合わせました */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        /* ページ表題（真ん中） */
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 2em;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        /* 名前欄と写真の横並びレイアウト */
+        .name-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        .name-info {
+            flex: 1;
+        }
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f0f4f8;
+            margin-left: 1.5em;
+        }
+
+        /* 統一された見出しスタイル */
+        h2 { 
+            color: #2c3e50; 
+            font-size: 1.1rem; 
+            text-align: left; 
+            border-left: 4px solid #1abc9c; 
+            padding-left: 0.8em; 
+            margin: 1.8em 0 0.8em; 
+        }
+        
+        /* テキストコンテンツ */
+        .content-text {
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 1em;
+            padding-left: 0.5em;
+        }
+
+        /* リストスタイル（資格・学歴） */
+        .bio-list { text-align: left; font-size: 0.95rem; line-height: 1.8; color: #555; }
+        .bio-item { margin-bottom: 0.8em; display: flex; align-items: flex-start; }
+        .date { min-width: 100px; font-weight: bold; color: #2c3e50; }
+
+        /* リンクボタン（トップページのスタイルを継承） */
+        .contact-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 0.6em 1.2em;
+            background: #24292e; /* GitHubカラー */
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: #444;
+        }
+
+        .back-link { 
+            display: block; 
+            color: #3498db; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            margin-top: 3em; 
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        footer { margin-top: 3em; padding: 2em; font-size: 0.8em; color: #777; line-height: 1.6; }
+
+        @media (max-width: 480px) {
+            .container { padding: 1.5em; margin: 1.5em auto; }
+            .name-section { flex-direction: row; align-items: center; }
+            .profile-photo { width: 65px; height: 65px; margin-left: 1em; }
+            .date { min-width: 85px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
         <ul class="menu">
            <li><a href="index.html">Home</a></li>
@@ -25,10 +157,68 @@
            <li><a href="disclaimer.html">免責事項</a></li>
         </ul>
     </nav>
+    
     <div class="container">
-        <h1>About Me</h1>
-        <p>現在、ページを作成中です。公開までしばらくお待ちください。</p>
+        <h1 class="page-title">About Me</h1>
+
+        <div class="name-section">
+            <div class="name-info">
+                <h2>名前 / Name</h2>
+                <div class="content-text">131a5c6</div>
+            </div>
+            <img src="my-photo.jpg" alt="131a5c6" class="profile-photo">
+        </div>
+
+        <h2>現在の活動</h2>
+        <div class="content-text">
+            情報系とは全く関係のない仕事に従事しながら、余暇で対話型生成AIの活用手法を学びつつ、私の価値観的に便利そうなものを開発・制作しようとしています。
+        </div>
+
+        <h2>連絡先 / Contact</h2>
+        <div class="content-text">
+            お問い合わせやご質問は、GitHubリポジトリのIssueにて受け付けています。（メール対応できるようにいずれ変更いたします。）<br>
+            <a href="https://github.com/131a5c6/video_Conv/issues" class="contact-link">GitHub Issues へ</a>
+        </div>
+
+        <h2>資格</h2>
+        <div class="bio-list">
+            <div class="bio-item">
+                <span class="date">2025年9月</span>
+                <span>第二種電気工事士</span>
+            </div>
+            <div class="bio-item">
+                <span class="date">2023年7月</span>
+                <span>普通自動車第一種運転免許</span>
+            </div>
+        </div>
+
+        <h2>学歴・職歴</h2>
+        <div class="bio-list">
+            <div class="bio-item">
+                <span class="date">2026年4月</span>
+                <span>社会人として活動開始</span>
+            </div>
+            <div class="bio-item">
+                <span class="date">2026年3月</span>
+                <span>私立大学 工学部 卒業</span>
+            </div>
+            <div class="bio-item">
+                <span class="date">2022年4月</span>
+                <span>私立大学 工学部 入学</span>
+            </div>
+            <div class="bio-item">
+                <span class="date">2022年3月</span>
+                <span>公立高等学校 卒業</span>
+            </div>
+        </div>
+
         <a href="index.html" class="back-link">← ホームへ戻る</a>
     </div>
+
+    <footer>
+        © 2025-2026 131a5c6. All Rights Reserved.<br>
+        Created with the support of AI (Gemini).
+    </footer>
+
 </body>
 </html>
