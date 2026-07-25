@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2進数・10進数 変換練習 | 131a5c6</title>
+    <style>
+        /* =========================================
+           サイト共通スタイル (ヘッダー・フッター・ベース)
+           ========================================= */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f0f4f8; 
+            text-align: center; 
+            scroll-behavior: smooth; 
+            color: #333;
+        }
+
+        /* ナビゲーション */
+        nav {
+            background: #2c3e50;
+            padding: 0.5em 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .menu li {
+            margin: 0 1em;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .menu a:hover {
+            color: #1abc9c;
+        }
+
+        /* フッター */
+        footer { 
+            margin-top: 3em; 
+            padding: 2em; 
+            font-size: 0.8em; 
+            color: #777; 
+            line-height: 1.6; 
+        }
+
+        /* =========================================
+           変換トレーニング専用スタイル
+           ========================================= */
+        .container {
+            max-width: 600px;
+            margin: 40px auto; 
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+        .problem-area {
+            margin: 30px 0;
+        }
+        #binary-display {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #2980b9;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+        .input-area {
+            margin: 20px 0;
+        }
+        input[type="number"] {
+            font-size: 1.5em;
+            padding: 10px;
+            width: 150px;
+            text-align: center;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            outline: none;
+        }
+        input[type="number"]:focus {
+            border-color: #3498db;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .btn-submit { background-color: #27ae60; color: white; }
+        .btn-submit:hover { background-color: #219150; }
+        .btn-next { background-color: #3498db; color: white; }
+        .btn-next:hover { background-color: #2980b9; }
+        
+        #result-message {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 40px;
+        }
+        .correct { color: #27ae60; }
+        .incorrect { color: #e74c3c; }
+        
+        .explanation {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #f39c12;
+            padding: 15px;
+            text-align: left;
+            border-radius: 4px;
+            display: none;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ナビゲーション（ヘッダー） -->
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutme.html">About me</a></li>
+            <li><a href="https://github.com/131a5c6/video_Conv">Video Converter</a></li>
+            <li><a href="UAM/index.html">UAM</a></li>
+            <li><a href="disclaimer.html">免責事項</a></li>
+        </ul>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container">
+        <h1>2進数 → 10進数 変換練習</h1>
+        <p>表示された2進数を10進数に変換しよう。</p>
+
+        <div class="problem-area">
+            <div id="binary-display">1010</div>
+        </div>
+
+        <div class="input-area">
+            <input type="number" id="user-answer" placeholder="10進数" onkeypress="handleKeyPress(event)">
+        </div>
+
+        <div>
+            <!-- IDを追加し、次の問題ボタンは初期状態で非表示に -->
+            <button class="btn-submit" id="btn-submit" onclick="checkAnswer()">答え合わせ</button>
+            <button class="btn-next" id="btn-next" onclick="generateProblem()" style="display: none;">次の問題</button>
+        </div>
+
+        <div id="result-message"></div>
+        
+        <div id="explanation" class="explanation"></div>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        © 2025-2026 131a5c6. All Rights Reserved.<br>
+        Created with the support of AI (Gemini).
+    </footer>
+
+    <!-- スクリプト -->
+    <script>
+        let currentDecimal = 0;
+        let currentBinary = "";
+
+        function generateProblem() {
+            currentDecimal = Math.floor(Math.random() * 255) + 1;
+            currentBinary = currentDecimal.toString(2);
+            
+            document.getElementById('binary-display').innerText = currentBinary;
+            document.getElementById('user-answer').value = '';
+            document.getElementById('result-message').innerText = '';
+            document.getElementById('result-message').className = '';
+            document.getElementById('explanation').style.display = 'none';
+            
+            // ボタンの表示をリセット（答え合わせボタンを表示、次の問題ボタンを隠す）
+            document.getElementById('btn-submit').style.display = 'inline-block';
+            document.getElementById('btn-next').style.display = 'none';
+            
+            document.getElementById('user-answer').focus();
+        }
+
+        function handleKeyPress(event) {
+            // エンターキーが押された時の処理
+            if (event.key === 'Enter') {
+                // まだ答え合わせをしていない場合のみ判定を実行
+                if (document.getElementById('btn-submit').style.display !== 'none') {
+                    checkAnswer();
+                } else {
+                    // 答え合わせ済みの場合は次の問題へ
+                    generateProblem();
+                }
+            }
+        }
+
+        function checkAnswer() {
+            const userInput = document.getElementById('user-answer').value;
+            const resultMessage = document.getElementById('result-message');
+            const explanation = document.getElementById('explanation');
+
+            if (userInput === '') {
+                resultMessage.innerText = '答えを入力してください。';
+                resultMessage.className = 'incorrect';
+                return; // 未入力の場合は処理を中断してボタンはそのまま
+            }
+
+            const userAnswer = parseInt(userInput, 10);
+
+            if (userAnswer === currentDecimal) {
+                resultMessage.innerText = '正解';
+                resultMessage.className = 'correct';
+            } else {
+                resultMessage.innerText = '不正解';
+                resultMessage.className = 'incorrect';
+            }
+
+            let expHtml = `<strong>【解説】</strong><br>`;
+            expHtml += `元の2進数： <strong>${currentBinary}</strong><br>`;
+            expHtml += `正解の10進数： <strong>${currentDecimal}</strong><br><br>`;
+            
+            expHtml += `<strong>計算式：</strong><br>`;
+            let calculationParts = [];
+            for (let i = 0; i < currentBinary.length; i++) {
+                let bit = parseInt(currentBinary[i]);
+                let power = currentBinary.length - 1 - i;
+                if (bit === 1) {
+                    calculationParts.push(`(1 × 2<sup>${power}</sup>)`);
+                }
+            }
+            expHtml += calculationParts.join(" + ") + ` = ${currentDecimal}`;
+
+            explanation.innerHTML = expHtml;
+            explanation.style.display = 'block';
+
+            // 答え合わせが完了したらボタンを切り替える
+            document.getElementById('btn-submit').style.display = 'none';
+            document.getElementById('btn-next').style.display = 'inline-block';
+            
+            // 次の問題ボタンにフォーカスを当てておく（エンターキーで次に行きやすくするため）
+            document.getElementById('btn-next').focus();
+        }
+
+        window.onload = generateProblem;
+    </script>
+</body>
+</html>
